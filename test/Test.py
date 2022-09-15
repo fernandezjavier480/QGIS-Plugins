@@ -30,7 +30,8 @@ from .resources import *
 # Import the code for the dialog
 from .Test_dialog import TestDialog
 import os.path
-
+# Import processing for the reproject
+import processing
 
 class Test:
     """QGIS Plugin Implementation."""
@@ -179,7 +180,29 @@ class Test:
                 action)
             self.iface.removeToolBarIcon(action)
 
+    def projection(self):
+        """Reproject all shapefiles in folder"""
+        # Create Path Results
+        respath = 'Results'
+        # Mode create output
+        mode = 0o666
+        # Create pathout
+        pathout = os.path.join(self.folder_path_out, respath)
+        os.mkdir(pathout, mode)
+        # Iterate directory
+        for file in os.listdir(self.folder_path_in):
+        # check only shapefiles
+            if file.endswith('.shp'):
+                #Run processing with parameters
+                processing.runAndLoadResults("qgis:reprojectlayer", 
+                               {'INPUT': self.folder_path_in + '\\' + file,
+                                'TARGET_CRS': self.project,
+                                'OUTPUT' : pathout + '\\proj_' + file})
+                
+        
 
+    
+    
     def run(self):
         """Run method that performs all the real work"""
 
@@ -188,7 +211,10 @@ class Test:
         if self.first_start == True:
             self.first_start = False
             self.dlg = TestDialog()
-
+            #Change mode of storage to Folder in two widgets
+            self.Widfolder_in = self.dlg.mQgsFileWidget.setStorageMode(1)
+            self.Widfolder_out = self.dlg.mQgsFileWidget_2.setStorageMode(1)
+            
         # show the dialog
         self.dlg.show()
         # Run the dialog event loop
@@ -197,4 +223,11 @@ class Test:
         if result:
             # Do something useful here - delete the line containing pass and
             # substitute with your code.
-            pass
+            # Folder selected 
+            self.folder_path_in = self.dlg.mQgsFileWidget.filePath()
+            self.folder_path_out = self.dlg.mQgsFileWidget_2.filePath()
+            # CRC selected
+            self.project = self.dlg.mQgsProjectionSelectionWidget.crs().authid()
+            # Execute projection function 
+            self.projection()
+            
