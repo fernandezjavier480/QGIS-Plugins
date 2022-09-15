@@ -198,10 +198,7 @@ class Test:
                                {'INPUT': self.folder_path_in + '\\' + file,
                                 'TARGET_CRS': self.project,
                                 'OUTPUT' : pathout + '\\proj_' + file})
-                
-        
 
-    
     
     def run(self):
         """Run method that performs all the real work"""
