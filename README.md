@@ -12,4 +12,4 @@ This test plugin was created to perform the reprojection of shapefile-type vecto
 
 The transformed data is added to the current project and verification of your new projection can be done by opening the properties of each layer.
 
-![Image of the result added to the project](https://github.com/fernandezjavier480/GithubTest/blob/a6213e83f7c56a300ab755703ca6241a63162e50/2_Image.PNG)
+![Image of the result added to the project](https://github.com/fernandezjavier480/GithubTest/blob/3d25468701585c0e8d85b94d78367c1767dea496/2_Image.png)
