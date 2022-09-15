@@ -65,3 +65,4 @@ def projection(self):
             # Execute projection function 
             self.projection()
 ```
+#### The plugin is a test so its use is basic and simple for those who are just getting into spatial data management in QGIS
